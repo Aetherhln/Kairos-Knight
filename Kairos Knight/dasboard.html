@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kairos Knight — Club Basket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <style>
+    :root {
+      --bg-deep: #130d1e;
+      --bg-card: #201631;
+      --bg-elevated: #25193d;
+      --accent: #a259f7;
+      --accent-soft: rgba(162, 89, 247, 0.17);
+      --text: #f2e9fb;
+      --text-muted: #bb94e3;
+      --court: #a37be7;
+      --radius: 14px;
+      --nav-h: 72px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .display {
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Background pattern */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(162,89,247,0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(163, 123, 231, 0.11), transparent),
+        var(--bg-deep);
+    }
+
+    .page-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b181fb' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.75;
+    }
+
+    /* Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(19, 13, 30, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(182, 132, 255, 0.10);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo:hover {
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), #6a37a8 90%);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.25rem;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(162, 89, 247, 0.40);
+    }
+
+    .logo span {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #1b102c !important;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .nav-cta:hover {
+      background: #c299fc;
+      color: #1b102c !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: var(--bg-elevated);
+      border: 1px solid rgba(191, 148, 248, 0.15);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid rgba(191, 148, 248, 0.13);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+
+      nav.open {
+        max-height: 320px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        padding: 1rem 1.5rem 1.25rem;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .nav-cta {
+        display: inline-block;
+        margin-top: 0.25rem;
+      }
+    }
+
+    /* Sections */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    section {
+      padding: 4rem 0;
+      scroll-margin-top: calc(var(--nav-h) + 1rem);
+    }
+
+    section:first-of-type {
+      padding-top: 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    h2.display {
+      font-size: clamp(2.25rem, 5vw, 3.25rem);
+      margin: 0 0 1rem;
+      line-height: 1.05;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 900px) {
+      .hero {
+        grid-template-columns: 1.1fr 0.9fr;
+        min-height: calc(100vh - var(--nav-h) - 4rem);
+        padding: 2rem 0 3rem;
+      }
+    }
+
+    .hero h1.display {
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      margin: 0 0 0.5rem;
+      line-height: 0.95;
+      background: linear-gradient(180deg, #fff 0%, #a37be7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 32ch;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #1b102c;
+      box-shadow: 0 8px 24px rgba(162, 89, 247, 0.35);
+    }
+
+    .btn-primary:hover {
+      color: #1b102c;
+      background: #c299fc;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(191, 148, 248, 0.19);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(162, 89, 247, 0.08);
+      color: var(--accent);
+    }
+
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+      border: 1px solid rgba(191, 148, 248, 0.15);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle, var(--accent-soft) 0%, transparent 55%);
+      top: -20%;
+      left: -20%;
+    }
+
+    .court-svg {
+      width: min(100%, 320px);
+      height: auto;
+      position: relative;
+      z-index: 1;
+      opacity: 0.92;
+    }
+
+    /* Cards grid */
+    .grid-3 {
+      display: grid;
+      gap: 1.25rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid rgba(191, 148, 248, 0.09);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: rgba(162, 89, 247, 0.33);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Schedule */
+    .schedule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .schedule-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      border: 1px solid rgba(191, 148, 248, 0.09);
+    }
+
+    .schedule-day {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      min-width: 3.5rem;
+    }
+
+    .schedule-meta {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .schedule-meta strong {
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .schedule-meta span {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    /* Team strip */
+    .team-strip {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      margin-top: 1.5rem;
+    }
+
+    .team-card {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid rgba(191, 148, 248, 0.10);
+    }
+
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 0.75rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--court), #6a37a8);
+      display: grid;
+      place-items: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.75rem;
+      color: var(--bg-deep);
+    }
+
+    .team-card h4 {
+      margin: 0 0 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .team-card p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Branch section */
+    .branches-strip {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .branch-card {
+      text-align: center;
+      padding: 1.25rem 1rem;
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      border: 1px solid rgba(162, 89, 247, 0.21);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .branch-name {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin: 0 0 0.35rem 0;
+    }
+    .branch-location {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .branch-contact {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-top: 0.3rem;
+      word-break: break-all;
+    }
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .gallery-cell {
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+      background: linear-gradient(160deg, var(--bg-elevated), var(--bg-card));
+      border: 1px solid rgba(191, 148, 248, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 0.65rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .gallery-cell:hover {
+      transform: translateY(-2px);
+      border-color: rgba(162, 89, 247, 0.5);
+    }
+
+    .gallery-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      left: 0.65rem;
+      right: 0.65rem;
+      bottom: 0.65rem;
+      background: linear-gradient(180deg, rgba(19, 13, 30, 0.45), rgba(19, 13, 30, 0.82));
+      border: 1px solid rgba(191, 148, 248, 0.3);
+      border-radius: 9px;
+      padding: 0.33rem 0.5rem;
+      color: #f2e9fb;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .gallery-group {
+      margin-bottom: 0.5rem;
+      background: rgba(32, 22, 49, 0.72);
+      border: 1px solid rgba(191, 148, 248, 0.14);
+      border-radius: 16px;
+      padding: 0.9rem;
+    }
+
+    .gallery-group-title {
+      margin: 0 0 0.75rem;
+      color: var(--accent);
+      font-size: 1.08rem;
+      letter-spacing: 0.03em;
+    }
+
+    .gallery-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    }
+
+    @media (min-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* CTA / Footer */
+    .cta-box {
+      margin-top: 2rem;
+      padding: 2.5rem;
+      border-radius: calc(var(--radius) + 4px);
+      background: linear-gradient(135deg, rgba(162, 89, 247, 0.16) 0%, var(--bg-card) 55%);
+      border: 1px solid rgba(162, 89, 247, 0.29);
+      text-align: center;
+    }
+
+    .cta-box h2.display {
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-box p {
+      color: var(--text-muted);
+      max-width: 42ch;
+      margin: 0 auto 1.5rem;
+    }
+
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+      border-top: 1px solid rgba(191, 148, 248, 0.11);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    footer strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <header>
+    <a href="#" class="logo" style="display: flex; align-items: center; gap: 0.6em; text-decoration: none;">
+      <img src="logo.jpg" alt="Kairos Knight Logo" class="logo-mark" style="height: 2.5em; width: auto; box-shadow: 0 1px 6px 0 rgba(162,89,247,0.07);" />
+      <span style="
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        font-weight: 900;
+        font-size: 1.5rem;
+        background: linear-gradient(90deg, #7450f7, #a259f7 70%, #e0b9ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        /* text-fill-color: transparent; */
+   
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        box-decoration-break: clone;
+        ">
+        Kairos Knight
+      </span>
+    </a>
+    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#nilai">Nilai</a></li>
+        <li><a href="#jadwal">Jadwal</a></li>
+        <li><a href="#tim">Tim</a></li>
+        <li><a href="#cabang">Cabang</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#bergabung" class="nav-cta">Bergabung</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="beranda">
+      <div>
+        <p class="section-label">Club basket · Komunitas & kompetisi</p>
+        <h1 class="display">Kairos Knight</h1>
+        <p class="hero-tagline">
+          Waktu yang tepat untuk berlatih, bertanding, dan bertumbuh bersama. Kami membuka pintu untuk pemain baru yang ingin serius di lapangan maupun sekadar menikmati permainan.
+        </p>
+        <div class="hero-actions">
+          <a href="#bergabung" class="btn btn-primary">Daftar minat</a>
+          <a href="#jadwal" class="btn btn-ghost">Lihat jadwal latihan</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="court-svg" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="180" height="140" rx="4" fill="none" stroke="rgba(162,89,247,0.62)" stroke-width="2"/>
+          <line x1="100" y1="10" x2="100" y2="150" stroke="rgba(162,89,247,0.30)" stroke-width="1.5"/>
+          <circle cx="100" cy="80" r="22" fill="none" stroke="rgba(162,89,247,0.40)" stroke-width="1.5"/>
+          <path d="M 10 50 Q 55 80 10 110" fill="none" stroke="rgba(162,89,247,0.36)" stroke-width="1.5"/>
+          <path d="M 190 50 Q 145 80 190 110" fill="none" stroke="rgba(162,89,247,0.36)" stroke-width="1.5"/>
+          <rect x="10" y="65" width="40" height="30" fill="none" stroke="rgba(162,89,247,0.3)" stroke-width="1.2"/>
+          <rect x="150" y="65" width="40" height="30" fill="none" stroke="rgba(162,89,247,0.3)" stroke-width="1.2"/>
+        </svg>
+      </div>
+    </section>
+
+    <section id="tentang">
+      <p class="section-label">Tentang kami</p>
+      <h2 class="display">Lebih dari sekadar main bola</h2>
+      <p style="max-width: 65ch; color: var(--text-muted); margin: 0 0 1.5rem;">
+        <strong style="color: var(--text);">Kairos Knight</strong> adalah club basket yang fokus pada pengembangan skill, teamwork, dan sportivitas. Dari latihan fundamental hingga skrimmage, setiap anggota didorong untuk memberikan yang terbaik—di dalam dan di luar lapangan.
+      </p>
+      <p style="max-width: 65ch; color: var(--text-muted); margin: 0;">
+        Cocok untuk pelajar umur 6-18 tahun yang ingin rutin bergerak, bertemu teman baru, dan ikut event antar club atau turnamen lokal.
+      </p>
+    </section>
+
+    <section id="nilai">
+      <p class="section-label">Yang kami junjung</p>
+      <h2 class="display">Nilai club</h2>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🏀</div>
+          <h3>Disiplin & konsistensi</h3>
+          <p>Latihan terjadwal dan komitmen pribadi membentuk pemain yang andal saat tekanan tinggi.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🤝</div>
+          <h3>Tim di atas ego</h3>
+          <p>Pass yang tepat dan komunikasi di pertahanan sama pentingnya dengan poin individu.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">⚡</div>
+          <h3>Semangat belajar</h3>
+          <p>Setiap level dipersilakan—asalkan mau latihan dan mendengar feedback dari pelatih dan senior.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="jadwal">
+      <p class="section-label">Rutinitas</p>
+      <h2 class="display">Jadwal latihan</h2>
+      <div class="schedule-list">
+        <div class="schedule-item">
+          <span class="schedule-day">Sen</span>
+          <div class="schedule-meta">
+            <strong>Technical & shooting</strong>
+            <span>18.30 – 20.30 · Indoor court (contoh)</span>
+          </div>
+          <span class="badge">Reguler</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-day">Rab</span>
+          <div class="schedule-meta">
+            <strong>Scrimmage & kondisi</strong>
+            <span>19.00 – 21.00 · Outdoor / indoor</span>
+          </div>
+          <span class="badge">Intensif</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-day">Sab</span>
+          <div class="schedule-meta">
+            <strong>Open run & newcomer</strong>
+            <span>08.00 – 10.00 · Cocok untuk trial</span>
+          </div>
+          <span class="badge">Terbuka</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tim">
+      <p class="section-label">Struktur</p>
+      <h2 class="display">Tim Coach</h2>
+      <div class="team-strip">
+        <div class="team-card">
+          <div class="team-avatar">P</div>
+          <h4>Pelatih kepala</h4>
+          <p>Strategi & pengembangan pemain</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">C</div>
+          <h4>Kapten</h4>
+          <p>Koordinasi di lapangan</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">M</div>
+          <h4>Manajer</h4>
+          <p>Jadwal, jersey, administrasi</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">+</div>
+          <h4>Anggota</h4>
+          <p>Kamu berikutnya</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CABANG SECTION MULAI -->
+    <section id="cabang">
+      <p class="section-label">Cabang</p>
+      <h2 class="display">Lokasi / Cabang Kairos Knight</h2>
+      <p style="color: var(--text-muted); max-width: 55ch; margin: 0 0 0.5rem;">
+        Beberapa cabang aktif di beberapa daerah — silakan cek yang terdekat dengan lokasi kamu, atau hubungi kontak di bawah.
+      </p>
+      <div class="branches-strip">
+        <div class="branch-card">
+          <div class="branch-name">Kairos Knight Jakarta</div>
+          <div class="branch-location">Jakarta Selatan, GOR Bulungan</div>
+          <div class="branch-contact"><a href="https://wa.me/6282200000011" target="_blank" style="color:var(--accent);text-decoration:none;">WA: 0822-0000-011</a></div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Kairos Knight Depok</div>
+          <div class="branch-location">Depok, GOR Cipayung</div>
+          <div class="branch-contact"><a href="https://wa.me/6282212341234" target="_blank" style="color:var(--accent);text-decoration:none;">WA: 0822-1234-1234</a></div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Kairos Knight Bandung</div>
+          <div class="branch-location">Bandung, Cihampelas</div>
+          <div class="branch-contact"><a href="https://wa.me/6282234567890" target="_blank" style="color:var(--accent);text-decoration:none;">WA: 0822-3456-7890</a></div>
+        </div>
+        <div class="branch-card">
+          <div class="branch-name">Cabang Lain (Custom)</div>
+          <div class="branch-location">Tulis cabangmu sendiri di sini!</div>
+          <div class="branch-contact" style="color:var(--text-muted);">Hubungi admin club untuk kolaborasi cabang baru.</div>
+        </div>
+      </div>
+    </section>
+    <!-- CABANG SECTION SELESAI -->
+
+    <section id="galeri">
+      <p class="section-label">Momen</p>
+      <h2 class="display">Galeri</h2>
+      <div class="gallery">
+        <div class="gallery-cell">Latihan tim</div>
+        <div class="gallery-cell">Turnamen</div>
+        <div class="gallery-cell">After game</div>
+        <div class="gallery-cell">Community</div>
+      </div>
+    </section>
+
+    <section id="bergabung">
+      <div class="cta-box">
+        <p class="section-label" style="margin-bottom: 0.5rem;">Pendaftaran</p>
+        <h2 class="display">Mau ikut latihan percobaan?</h2>
+        <p>Hubungi kami lewat WhatsApp atau Instagram—sebutkan posisi favorit dan pengalaman bermainmu (boleh pemula).</p>
+        <div class="hero-actions" style="justify-content: center;">
+          <a href="https://wa.me/6285717596986" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Chat WhatsApp</a>
+          <a href="https://www.instagram.com/kairosknights?igsh=MXdldmpjNnA3em96bQ==" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Instagram club</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Kairos Knight</strong> · Club basket · Tahun <span id="year"></span></p>
+  </footer>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "kairosDashboardData";
+
+      var defaults = {
+        members: [
+          { role: "Pelatih kepala" },
+          { role: "Kapten" },
+          { role: "Manajer" },
+          { role: "Anggota" }
+        ],
+        branches: [
+          { name: "Kairos Knight Jakarta", location: "Jakarta Selatan, GOR Bulungan" },
+          { name: "Kairos Knight Depok", location: "Depok, GOR Cipayung" },
+          { name: "Kairos Knight Bandung", location: "Bandung, Cihampelas" },
+          { name: "Cabang Lain (Custom)", location: "Tulis cabangmu sendiri di sini!" }
+        ],
+        gallery: [
+          { name: "Latihan tim", images: [] },
+          { name: "Turnamen", images: [] },
+          { name: "After game", images: [] },
+          { name: "Community", images: [] }
+        ]
+      };
+
+      function escapeHtml(text) {
+        return String(text || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function loadData() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return defaults;
+          var parsed = JSON.parse(raw);
+          var rawGallery = Array.isArray(parsed.gallery) ? parsed.gallery : defaults.gallery;
+          var groupedMap = {};
+          rawGallery.forEach(function (item) {
+            if (!item) return;
+            var name = String(item.name || item.title || "Umum").trim();
+            if (!groupedMap[name]) groupedMap[name] = [];
+            if (Array.isArray(item.images)) {
+              item.images.forEach(function (img) {
+                if (img && String(img).trim() !== "") groupedMap[name].push(String(img));
+              });
+            } else if (item.image && String(item.image).trim() !== "") {
+              groupedMap[name].push(String(item.image));
+            }
+          });
+          var galleryGroups = Object.keys(groupedMap).map(function (key) {
+            return { name: key, images: groupedMap[key] };
+          });
+          return {
+            // Prune legacy data so "description" for members is removed.
+            members: (Array.isArray(parsed.members) ? parsed.members : defaults.members)
+              .map(function (m) {
+                return { role: (m && m.role != null) ? m.role : "" };
+              }),
+            branches: Array.isArray(parsed.branches) ? parsed.branches : defaults.branches,
+            gallery: galleryGroups.length ? galleryGroups : defaults.gallery
+          };
+        } catch (e) {
+          return defaults;
+        }
+      }
+
+      function renderMembers(items) {
+        var container = document.querySelector(".team-strip");
+        if (!container || !items || !items.length) return;
+
+        container.innerHTML = items.map(function (item) {
+          var role = String(item.role || "").trim();
+          var avatar = role ? role.charAt(0).toUpperCase() : "?";
+          return (
+            '<div class="team-card">' +
+              '<div class="team-avatar">' + escapeHtml(avatar) + '</div>' +
+              '<h4>' + escapeHtml(role) + '</h4>' +
+            '</div>'
+          );
+        }).join("");
+      }
+
+      function renderBranches(items) {
+        var container = document.querySelector(".branches-strip");
+        if (!container || !items || !items.length) return;
+
+        container.innerHTML = items.map(function (item) {
+          return (
+            '<div class="branch-card">' +
+              '<div class="branch-name">' + escapeHtml(item.name || "") + '</div>' +
+              '<div class="branch-location">' + escapeHtml(item.location || "") + '</div>' +
+            '</div>'
+          );
+        }).join("");
+      }
+
+      function renderGallery(items) {
+        var container = document.querySelector(".gallery");
+        if (!container || !items || !items.length) return;
+
+        container.innerHTML = items.map(function (group) {
+          var groupName = escapeHtml(group.name || "Umum");
+          var images = Array.isArray(group.images) ? group.images : [];
+          var cells = images.length
+            ? images.map(function (image, idx) {
+                return (
+                  '<div class="gallery-cell">' +
+                    '<img src="' + String(image) + '" alt="' + groupName + " " + (idx + 1) + '">' +
+                    '<span class="gallery-caption">' + groupName + '</span>' +
+                  '</div>'
+                );
+              }).join("")
+            : '<div class="gallery-cell">Belum ada foto untuk ' + groupName + '</div>';
+
+          return (
+            '<div class="gallery-group">' +
+              '<h3 class="gallery-group-title">' + groupName + '</h3>' +
+              '<div class="gallery-grid">' + cells + '</div>' +
+            '</div>'
+          );
+        }).join("");
+      }
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      var data = loadData();
+      renderMembers(data.members);
+      renderBranches(data.branches);
+      renderGallery(data.gallery);
+
+      var toggle = document.getElementById("menuToggle");
+      var nav = document.getElementById("mainNav");
+      if (toggle && nav) {
+        toggle.addEventListener("click", function () {
+          nav.classList.toggle("open");
+        });
+        nav.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            nav.classList.remove("open");
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
