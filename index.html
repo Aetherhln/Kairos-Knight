@@ -3,676 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Kairos Knight</title>
+  <title>Login Admin Kairos Knight</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/jpeg" href="logo.jpg" />  
+  <link rel="icon" type="image/jpeg" href="logo.jpg" /> 
   <style>
     :root {
-      --bg: #160b1f;
-      --bg-dark: #0f0817;
+      --bg: #1e1140;
       --card: #24143c;
-      --card-glow: 0 6px 40px 0 #a259f731, 0 1.5px 15px 0 #a259f71a;
-      --line: rgba(191, 148, 248, 0.12);
+      --line: #b775ff33;
       --text: #f6edff;
-      --muted: #dccbfa;
       --accent: #b775ff;
       --danger: #ff5f8a;
       --ok: #55e1b6;
-      --glass: rgba(180,115,255,0.08);
-      --shadow: 0 2px 26px 0 #a259f732;
-    }
-    * { 
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-    html {
-      scroll-behavior: smooth;
     }
     body {
-      margin: 0;
+      font-family: "DM Sans", Arial, sans-serif;
+      background: linear-gradient(120deg, #2a1861 0%, #4b2257 100%), var(--bg);
       min-height: 100vh;
-      font-family: "DM Sans", "Segoe UI", Arial, sans-serif;
-      background:
-          linear-gradient(112deg, #2a1861 0%, #4b2257 100%),
-          radial-gradient(circle at 85% 20%, #b775ff22 0%, transparent 100%),
-          var(--bg);
-      color: var(--text);
-      letter-spacing: 0.01em;
-      transition: background 0.5s;
-    }
-    .wrap {
-      width: min(960px, 97vw);
-      margin: 2.7rem auto 2.5rem;
-      padding: 2.3rem 2vw 2.7rem;
-      position: relative;
-      border-radius: 28px;
-      background: var(--glass);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--line);
-      z-index: 2;
-      transition: box-shadow 0.24s;
-    }
-    .logo-row {
-      display: flex;
-      align-items: center;
-      gap: 1.15rem;
-      margin-bottom: 1.25rem;
-      position: relative;
-    }
-    .header-logo {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: linear-gradient(135deg, #b775ff 60%, #6b2fce 100%);
-      box-shadow: 0 2px 14px 0 #a259f788;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 3px solid #fff2;
-    }
-    .header-logo img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 0 2px #b775ff55;
-      transition: box-shadow .25s;
-    }
-    .header-logo:hover img {
-      box-shadow: 0 0 0 4px #a259f7aa;
-    }
-    h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 4.8vw, 2.85rem);
-      font-family: 'Bebas Neue', 'Segoe UI Semibold', Arial, sans-serif;
-      letter-spacing: 0.045em;
-      background: linear-gradient(95deg, #b775ff 40%, #f6edff 100%);
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      line-height: 1.12;
-      text-shadow: 0 2px 18px #a259f731;
-    }
-    @media (max-width: 500px) {
-      h1 { font-size: 1.42rem; }
-      .header-logo { width: 39px !important; height: 39px !important;}
-      .header-logo img { width: 33px !important; height: 33px !important;}
-    }
-    .sub {
-      margin: 0 0 2.1rem 0.08rem;
-      color: var(--muted);
-      font-size: 1.07rem;
-      max-width: 650px;
-      letter-spacing: 0.01em;
-      backdrop-filter: blur(0.8px);
-      opacity: 0.95;
-    }
-    .card {
-      background: var(--card);
-      border: 1.7px solid var(--line);
-      border-radius: 19px;
-      padding: 1.42rem 1.6rem 1.34rem;
-      margin-bottom: 1.47rem;
-      box-shadow: var(--card-glow);
-      position: relative;
-      transition: box-shadow 0.19s, border-color .16s;
-      overflow-x: auto;
-    }
-    .card h2 {
-      margin: 0 0 0.98rem;
-      font-size: 1.29rem;
-      letter-spacing: 0.013em;
-      background: linear-gradient(90deg, #b775ff 0 60%, #dccbfa 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 800;
-      text-shadow: 0 2px 16px #1d073a70;
-    }
-
-    .list {
-      display: grid;
-      gap: 0.98rem;
-      margin-bottom: .04em;
-    }
-    .item {
-      border: 1.5px solid var(--line);
-      border-radius: 14.5px;
-      padding: 1.08rem 1.18rem 0.98rem 1.18rem;
-      background: #1d1333db;
-      display: grid;
-      gap: 0.8rem;
-      box-shadow: 0 1px 8px 0 #b775ff1a;
-      transition: box-shadow 0.15s, border-color 0.15s;
-      position: relative;
-      backdrop-filter: blur(0.8px);
-      will-change: box-shadow, border-color;
-    }
-    .item:hover,
-    .item:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 2px 22px 0 #b775ff6a;
-      z-index: 2;
-    }
-
-    .row {
-      display: grid;
-      gap: 0.73rem;
-      grid-template-columns: repeat(12, 1fr);
-      align-items: end;
-    }
-    .field { grid-column: span 12; margin-bottom: 0.16rem; }
-
-    @media (min-width: 760px) {
-      .field.col-3 { grid-column: span 3; }
-      .field.col-4 { grid-column: span 4; }
-      .field.col-6 { grid-column: span 6; }
-      .field.col-12 { grid-column: span 12; }
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.19rem;
-      font-size: 0.96rem;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.014em;
-      opacity: 0.97;
-    }
-    input[type="text"], input[type="url"], input[type="email"] {
-      width: 100%;
-      background: #210d2c;
-      border: 1.5px solid var(--line);
-      color: var(--text);
-      border-radius: 11px;
-      padding: 0.65rem 0.82rem;
-      font-size: 1.09rem;
-      font-family: inherit;
-      transition: border-color 0.15s, box-shadow 0.16s;
-      box-shadow: 0 1px 2px 0 #b775ff21;
-      font-weight: 500;
-    }
-    input[type="text"]:focus, input[type="url"]:focus, input[type="email"]:focus {
-      border-color: var(--accent);
-      outline: none;
-      box-shadow: 0 2px 14px #b775ff32;
-    }
-    input[type="file"] {
-      color: var(--muted);
-      background: none;
-      border: none;
-      padding-left: 0;
-      font-size: 1.05rem;
-    }
-    .actions {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.68rem 1.14rem;
-      margin-top: 1.15rem;
-      align-items: center;
-    }
-    button, .link-btn {
-      border: 0;
-      border-radius: 999px;
-      padding: 0.72rem 1.47rem;
-      font-weight: 800;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.09rem;
-      box-shadow: 0 1px 9px #b775ff1a;
-      min-width: 44px;
-      min-height: 41px;
-      transition: box-shadow 0.13s, transform 0.13s, background 0.14s;
-      letter-spacing: .012em;
+      color: var(--text);
     }
-    button:active, .link-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 1px 5px #b775ff15;
+    .login-card {
+      background: var(--card);
+      padding: 2.15rem 2.4rem 1.9rem 2.4rem;
+      border-radius: 17px;
+      box-shadow: 0 2px 22px 0 #b775ff2f;
+      max-width: 340px;
+      width: 100%;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.1rem;
     }
-    .btn-primary { 
-      background: linear-gradient(90deg, #b775ff 0 70%, #dccbfa 100%);
-      color: #180a29; 
-      box-shadow: 0 1px 15px #b775ff29;
-      font-weight: 900;
-    }
-    .btn-ghost { 
-      background: transparent; 
-      border: 1.59px solid var(--line); 
-      color: var(--text); 
-      box-shadow: none;
-      font-weight: 800;
-    }
-    .btn-ghost:hover,
-    .btn-ghost:focus { 
+    .login-card h1 {
+      font-family: 'Bebas Neue', 'DM Sans', Arial, sans-serif;
+      text-align: center;
+      margin: 0 0 1.2rem 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.045em;
       color: var(--accent);
-      border-color: var(--accent);
-      background: #1a122c25;
+      text-shadow: 0 1px 14px #a259f731;
     }
-    .btn-danger { 
-      background: linear-gradient(90deg, #ff5f8a 0 40%, #c43d7b 100%);
-      color: #fff; 
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.7rem;
     }
-    .btn-ok { 
-      background: linear-gradient(90deg, #52e1b6 0 60%, #20efc8 100%);
-      color: #011e1b; 
-      letter-spacing: .014em;
-      font-weight: 900;
+    .login-logo img {
+      height: 60px;
+      width: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 18px 0 #b775ff21;
+      background: #fff;
     }
-    .status {
-      margin-top: 1.22rem;
-      font-size: 1.10rem;
-      color: var(--muted);
-      min-height: 1.4em;
-      transition: color 0.15s;
-      font-weight: 600;
-      letter-spacing: .01em;
-    }
-    .gallery-preview {
-      width: 130px;
-      height: 130px;
-      border-radius: 15px;
-      border: 2px solid var(--line);
-      object-fit: cover;
-      background: #170628;
+    .field label {
       display: block;
-      margin: 0 auto;
-      box-shadow: 0 3px 18px #b775ff30;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
-    .gallery-preview[src^="data:image/svg+xml"] {
-      background: #25163c;
-    }
-    .gallery-preview:hover, .gallery-preview:focus {
-      border-color: var(--accent);
-      box-shadow: 0 1px 25px #a259f772;
-    }
-    .muted {
-      color: var(--muted);
+      margin-bottom: 0.23rem;
       font-size: 0.99rem;
-      margin-left: 0.18rem;
-      margin-top: 0.2rem;
-      letter-spacing: .015em;
+      color: #dccbfa;
+      letter-spacing: 0.01em;
     }
-    .list, .card {
-      scrollbar-color: #b775ff #1a122c;
-      scrollbar-width: thin;
+    .field input {
+      width: 100%;
+      font-size: 1.08rem;
+      background: #1d1333;
+      border: 1.4px solid var(--line);
+      border-radius: 9px;
+      padding: 0.58rem 0.7rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.18s;
     }
-    .list::-webkit-scrollbar, .card::-webkit-scrollbar {
-      height: 10px;
-      width: 10px;
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 1px 11px #b775ff31;
     }
-    .list::-webkit-scrollbar-thumb, .card::-webkit-scrollbar-thumb {
-      background: #b775ff73;
-      border-radius: 7px;
+    .login-btn {
+      margin-top: 0.4rem;
+      background: linear-gradient(95deg, var(--accent) 45%, var(--ok) 130%);
+      color: var(--text);
+      border: none;
+      padding: 0.67rem;
+      border-radius: 11px;
+      font-size: 1.12rem;
+      font-family: inherit;
+      font-weight: 700;
+      letter-spacing: 0.017em;
+      cursor: pointer;
+      transition: background 0.18s;
+      box-shadow: 0 1.8px 10px #b775ff2a;
     }
-    .list::-webkit-scrollbar-track, .card::-webkit-scrollbar-track {
-      background: #1a122c;
-      border-radius: 6px;
+    .login-btn:hover {
+      background: linear-gradient(100deg, #ac6cf7 55%, #55e1b6 120%);
+      box-shadow: 0 3px 18px #b775ff2d;
     }
-    @media (prefers-reduced-motion: no-preference) {
-      .card, .item { 
-        animation: fade-in-card 0.65s cubic-bezier(.24,.78,.51,.98) 0.04s both; 
-      }
-      @keyframes fade-in-card {
-        0% { opacity:0; transform:translateY(18px) scale(0.99);}
-        90% {opacity:1;}
-        100% {opacity:1; transform:translateY(0) scale(1);}
-      }
-    }
-    @media (max-width: 600px) {
-      .wrap { padding: 1.35rem 2vw 1.8rem; }
-      .header-logo { width: 39px !important; height: 39px !important;}
-      .header-logo img { width: 33px !important; height: 33px !important;}
-      .gallery-preview { width: 92px; height: 92px; }
-      .card { padding: 0.96rem 0.69rem; }
-    }
-    /* Floating shadow ring for header */
-    .wrap:before {
-      content: "";
-      z-index: 0;
-      pointer-events: none;
-      position: absolute;
-      inset: -7px;
-      border-radius: 32px;
-      background: radial-gradient(circle at 70% 10%, #b775ff25 0, transparent 70%);
-      opacity: 0.7;
-      filter: blur(3px);
+    .alert {
+      margin-top: -.51rem;
+      margin-bottom: 0.5rem;
+      color: var(--danger);
+      text-align: center;
+      font-size: 1rem;
+      min-height: 1.4em;
+      letter-spacing: 0.008em;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="logo-row">
-      <span class="header-logo">
-        <img src="logo.jpg" alt="Logo Kairos Knight" style="width:56px; height:56px; border-radius: 50%;" loading="lazy"/>
-      </span>
-      <h1>Admin Dashboard Kairos Knight</h1>
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div class="login-logo">
+      <img src="logo.jpg" alt="Logo Kairos Knight" />
     </div>
-    <div class="sub">
-      <span>&#x1F389; Selamat datang di halaman admin dashboard<br>Kelola anggota, cabang, dan galeri <b>Kairos Knight</b> di sini.<br>Jangan lupa <b>simpan perubahan</b> setiap selesai edit!</span>
+    <h1>Login Admin</h1>
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" autocomplete="username" placeholder="Masukkan nama pengguna" required autofocus />
     </div>
-
-    <section class="card">
-      <h2>Daftar Anggota</h2>
-      <div id="membersList" class="list"></div>
-      <div class="actions">
-        <button type="button" class="btn-ghost" id="addMemberBtn">&#x2795; Tambah anggota</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Cabang Tim</h2>
-      <div id="branchesList" class="list"></div>
-      <div class="actions">
-        <button type="button" class="btn-ghost" id="addBranchBtn">&#x2795; Tambah cabang</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Galeri Kegiatan</h2>
-      <div id="galleryList" class="list"></div>
-      <div class="actions">
-        <button type="button" class="btn-ghost" id="addGalleryBtn">&#x2795; Tambah item galeri</button>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="actions">
-        <button type="button" class="btn-ok" id="saveBtn">&#128190; Simpan perubahan</button>
-        <button type="button" class="btn-danger" id="resetBtn">&#9851; Reset ke default</button>
-        <a href="dasboard.html" class="link-btn btn-primary">&#8680; Lihat dashboard publik</a>
-      </div>
-      <p id="statusText" class="status"></p>
-    </section>
-  </div>
-
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required />
+    </div>
+    <div class="alert" id="alertBox"></div>
+    <button class="login-btn" type="submit">Masuk</button>
+  </form>
   <script>
-    (function () {
-      var STORAGE_KEY = "kairosDashboardData";
-      var defaults = {
-        members: [
-          { role: "Pelatih Kepala" },
-          { role: "Kapten" },
-          { role: "Manajer" },
-          { role: "Anggota" }
-        ],
-        branches: [
-          { name: "Kairos Knight Jakarta", location: "Jakarta Selatan, GOR Bulungan" },
-          { name: "Kairos Knight Depok", location: "Depok, GOR Cipayung" },
-          { name: "Kairos Knight Bandung", location: "Bandung, Cihampelas" },
-          { name: "Cabang Lain (Custom)", location: "Tulis cabangmu sendiri di sini!" }
-        ],
-        gallery: [
-          { name: "Latihan tim", images: [] },
-          { name: "Turnamen", images: [] },
-          { name: "After game", images: [] },
-          { name: "Community", images: [] }
-        ]
-      };
-      function groupLegacyGallery(items) {
-        var map = {};
-        (items || []).forEach(function (item) {
-          if (!item) return;
-          var title = (item.name || item.title || "Umum").trim();
-          if (!map[title]) map[title] = [];
-          if (Array.isArray(item.images)) {
-            item.images.forEach(function (img) {
-              if (img && String(img).trim() !== "") map[title].push(String(img));
-            });
-          } else if (item.image && String(item.image).trim() !== "") {
-            map[title].push(String(item.image));
-          }
-        });
-        return Object.keys(map).map(function (key) {
-          return { name: key, images: map[key] };
-        });
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const alertBox = document.getElementById('alertBox');
+      if (user === "admin" && pass === "administrator") {
+        alertBox.textContent = "";
+        // redirect to admin page (ganti path sesuai kebutuhan)
+        window.location.href = "admin.html";
+      } else {
+        alertBox.textContent = "Username atau password salah!";
       }
-      function loadData() {
-        try {
-          var raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return JSON.parse(JSON.stringify(defaults));
-          var parsed = JSON.parse(raw);
-          var gallery = Array.isArray(parsed.gallery) ? parsed.gallery : defaults.gallery.slice();
-          return {
-            // Prune legacy data so "description" for members is removed.
-            members: (Array.isArray(parsed.members) ? parsed.members : defaults.members)
-              .map(function (m) {
-                return { role: (m && m.role != null) ? m.role : "" };
-              }),
-            branches: Array.isArray(parsed.branches) ? parsed.branches : defaults.branches.slice(),
-            gallery: groupLegacyGallery(gallery)
-          };
-        } catch (e) {
-          return JSON.parse(JSON.stringify(defaults));
-        }
-      }
-      function createInput(label, value, className) {
-        var field = document.createElement("div");
-        field.className = "field " + (className || "");
-        var labelEl = document.createElement("label");
-        labelEl.textContent = label;
-        var input = document.createElement("input");
-        input.type = "text";
-        input.value = value || "";
-        field.appendChild(labelEl);
-        field.appendChild(input);
-        return { field: field, input: input };
-      }
-      function renderMembers(data) {
-        var root = document.getElementById("membersList");
-        root.innerHTML = "";
-        data.members.forEach(function (m, i) {
-          var item = document.createElement("div");
-          item.className = "item";
-          var row = document.createElement("div");
-          row.className = "row";
-          var f1 = createInput("Jabatan/Nama", m.role, "col-10");
-          var delWrap = document.createElement("div");
-          delWrap.className = "field col-2";
-          var delBtn = document.createElement("button");
-          delBtn.type = "button";
-          delBtn.className = "btn-danger";
-          delBtn.setAttribute("title", "Hapus Anggota");
-          delBtn.innerHTML = "&#128465;";
-          delBtn.addEventListener("click", function () {
-            if (confirm("Yakin hapus anggota ini?")) {
-              data.members.splice(i, 1);
-              renderAll(data);
-            }
-          });
-          delWrap.appendChild(delBtn);
-          row.appendChild(f1.field);
-          row.appendChild(delWrap);
-          item.appendChild(row);
-          root.appendChild(item);
-          f1.input.addEventListener("input", function () { m.role = f1.input.value; });
-        });
-      }
-      function renderBranches(data) {
-        var root = document.getElementById("branchesList");
-        root.innerHTML = "";
-        data.branches.forEach(function (b, i) {
-          var item = document.createElement("div");
-          item.className = "item";
-          var row = document.createElement("div");
-          row.className = "row";
-          var f1 = createInput("Nama cabang", b.name, "col-6");
-          var f2 = createInput("Lokasi", b.location, "col-6");
-          var delWrap = document.createElement("div");
-          delWrap.className = "field col-3";
-          var delBtn = document.createElement("button");
-          delBtn.type = "button";
-          delBtn.className = "btn-danger";
-          delBtn.setAttribute("title", "Hapus Cabang");
-          delBtn.innerHTML = "&#128465;";
-          delBtn.addEventListener("click", function () {
-            if (confirm("Yakin hapus cabang ini?")) {
-              data.branches.splice(i, 1);
-              renderAll(data);
-            }
-          });
-          delWrap.appendChild(delBtn);
-          row.appendChild(f1.field);
-          row.appendChild(f2.field);
-          row.appendChild(delWrap);
-          item.appendChild(row);
-          root.appendChild(item);
-
-          f1.input.addEventListener("input", function () { b.name = f1.input.value; });
-          f2.input.addEventListener("input", function () { b.location = f2.input.value; });
-        });
-      }
-      function renderGallery(data) {
-        var root = document.getElementById("galleryList");
-        root.innerHTML = "";
-        data.gallery.forEach(function (g, i) {
-          var item = document.createElement("div");
-          item.className = "item";
-          var row = document.createElement("div");
-          row.className = "row";
-          var f1 = createInput("Nama kelompok", g.name, "col-4");
-          var uploadWrap = document.createElement("div");
-          uploadWrap.className = "field col-4";
-          var uploadLabel = document.createElement("label");
-          uploadLabel.textContent = "Upload gambar ke kelompok ini";
-          var uploadInput = document.createElement("input");
-          uploadInput.type = "file";
-          uploadInput.accept = "image/*";
-          uploadLabel.setAttribute('for', 'gal-upload-'+i);
-          uploadInput.id = 'gal-upload-'+i;
-          uploadWrap.appendChild(uploadLabel);
-          uploadWrap.appendChild(uploadInput);
-
-          var previewWrap = document.createElement("div");
-          previewWrap.className = "field col-3";
-          var previewLabel = document.createElement("label");
-          previewLabel.textContent = "Preview terakhir";
-          var preview = document.createElement("img");
-          preview.className = "gallery-preview";
-          preview.alt = g.name || "Preview galeri";
-          var latestImage = Array.isArray(g.images) && g.images.length ? g.images[g.images.length - 1] : "";
-          preview.src = latestImage ? latestImage : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130'%3E%3Crect width='100%25' height='100%25' fill='%23170b28'/%3E%3Ctext x='50%25' y='55%25' fill='%23dccbfa' font-family='DM Sans','arial' font-size='13' text-anchor='middle' dominant-baseline='middle'%3EBelum ada gambar%3C/text%3E%3C/svg%3E";
-          previewWrap.appendChild(previewLabel);
-          previewWrap.appendChild(preview);
-
-          var countWrap = document.createElement("div");
-          countWrap.className = "field col-12 muted";
-          countWrap.textContent = "Total gambar: " + (Array.isArray(g.images) ? g.images.length : 0);
-
-          var delWrap = document.createElement("div");
-          delWrap.className = "field col-3";
-          var delBtn = document.createElement("button");
-          delBtn.type = "button";
-          delBtn.className = "btn-danger";
-          delBtn.setAttribute("title", "Hapus Item Galeri");
-          delBtn.innerHTML = "&#128465;";
-          delBtn.addEventListener("click", function () {
-            if (confirm("Yakin hapus galeri ini?")) {
-              data.gallery.splice(i, 1);
-              renderAll(data);
-            }
-          });
-          delWrap.appendChild(delBtn);
-
-          row.appendChild(f1.field);
-          row.appendChild(uploadWrap);
-          row.appendChild(previewWrap);
-          row.appendChild(countWrap);
-          row.appendChild(delWrap);
-          item.appendChild(row);
-          root.appendChild(item);
-
-          f1.input.addEventListener("input", function () {
-            g.name = f1.input.value;
-            preview.alt = g.name || "Preview galeri";
-          });
-
-          uploadInput.addEventListener("change", function () {
-            var file = uploadInput.files && uploadInput.files[0];
-            if (!file) return;
-            if (!file.type || file.type.indexOf("image/") !== 0) {
-              showStatus("File harus berupa gambar.");
-              uploadInput.value = "";
-              return;
-            }
-            var reader = new FileReader();
-            reader.onload = function () {
-              if (!Array.isArray(g.images)) g.images = [];
-              g.images.push(reader.result);
-              preview.src = reader.result;
-              countWrap.textContent = "Total gambar: " + g.images.length;
-              showStatus("Gambar berhasil diunggah! Jangan lupa klik Simpan perubahan.");
-              uploadInput.value = "";
-            };
-            reader.readAsDataURL(file);
-          });
-
-          // Tap/click preview to open latest image on modal
-          if (latestImage) {
-            preview.style.cursor = "pointer";
-            preview.title = "Klik untuk lihat ukuran besar";
-            preview.addEventListener("click", function() {
-              var win = window.open();
-              win.document.write("<html><head><title>Lihat Gambar</title></head><body style='margin:0;background:#1a122c;display:flex;align-items:center;justify-content:center;height:100vh'><img src='" + latestImage.replace(/'/g,'\\\'') + "' alt='Preview' style='max-width:96vw;max-height:90vh;box-shadow:0 2px 24px rgba(180,117,255,.21);border-radius:15px;'/></body></html>");
-            });
-          }
-        });
-      }
-      function renderAll(data) {
-        renderMembers(data);
-        renderBranches(data);
-        renderGallery(data);
-      }
-      function showStatus(text) {
-        document.getElementById("statusText").textContent = text;
-        if(text) {
-          document.getElementById("statusText").style.color = "#b775ff";
-          setTimeout(function() {
-            document.getElementById("statusText").style.color = "";
-          }, 1900);
-        }
-      }
-      var state = loadData();
-      renderAll(state);
-
-      document.getElementById("addMemberBtn").addEventListener("click", function () {
-        state.members.push({ role: "Nama/Jabatan" });
-        renderAll(state);
-      });
-      document.getElementById("addBranchBtn").addEventListener("click", function () {
-        state.branches.push({ name: "Nama Cabang", location: "Lokasi" });
-        renderAll(state);
-      });
-      document.getElementById("addGalleryBtn").addEventListener("click", function () {
-        state.gallery.push({ name: "Kelompok baru", images: [] });
-        renderAll(state);
-      });
-      document.getElementById("saveBtn").addEventListener("click", function () {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        showStatus("Perubahan tersimpan! Buka/refresh dasboard.html untuk lihat hasilnya.");
-      });
-      document.getElementById("resetBtn").addEventListener("click", function () {
-        if (confirm("Yakin reset semua data ke default?")) {
-          state = JSON.parse(JSON.stringify(defaults));
-          localStorage.removeItem(STORAGE_KEY);
-          renderAll(state);
-          showStatus("Data kembali ke default.");
-        }
-      });
-
-      // Tooltip popover on info icon (future improvement)
-      // (bonus: Favicon animasi kecil!)
-      // document.querySelectorAll('.btn-ghost, .btn-ok, .btn-primary, .btn-danger').forEach(el=>{
-      //   el.addEventListener('mouseenter',()=>el.style.boxShadow="0 3px 18px #b775ff31");
-      //   el.addEventListener('mouseleave',()=>el.style.boxShadow="");
-      // });
-    })();
+    });
   </script>
 </body>
 </html>
