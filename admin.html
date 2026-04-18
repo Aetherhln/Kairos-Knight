@@ -61,34 +61,6 @@
       margin-bottom: 1.25rem;
       position: relative;
     }
-    .admin-actions {
-      position: absolute;
-      top: 0.4rem;
-      right: 0.1rem;
-      display: flex;
-      gap: 0.7rem;
-      z-index: 3;
-    }
-    .btn-logout {
-      background: transparent;
-      color: var(--danger);
-      border: 1.2px solid var(--danger);
-      padding: 0.4em 1.1em;
-      font-size: 0.97rem;
-      font-weight: 700;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      margin-left: 0;
-      box-shadow: none;
-      letter-spacing: .006em;
-    }
-    .btn-logout:hover,
-    .btn-logout:focus {
-      background: #ff5f8a24;
-      color: #fff;
-      border-color: #ff5f8a;
-    }
     .header-logo {
       width: 64px;
       height: 64px;
@@ -128,7 +100,6 @@
       h1 { font-size: 1.42rem; }
       .header-logo { width: 39px !important; height: 39px !important;}
       .header-logo img { width: 33px !important; height: 33px !important;}
-      .admin-actions { top: -1rem !important; }
     }
     .sub {
       margin: 0 0 2.1rem 0.08rem;
@@ -293,6 +264,19 @@
       letter-spacing: .014em;
       font-weight: 900;
     }
+    .btn-logout-custom {
+      background: linear-gradient(90deg, #ff5f8a 0 40%, #c43d7b 100%);
+      color: #fff; 
+      border: none;
+      box-shadow: 0 1px 9px #b775ff1a;
+      font-weight: 900;
+      padding-left: 1.7rem;
+      padding-right: 1.7rem;
+    }
+    .btn-logout-custom:hover, .btn-logout-custom:focus {
+      background: linear-gradient(90deg, #ff3972 0%, #bd2463 100%);
+      color: #fff;
+    }
     .status {
       margin-top: 1.22rem;
       font-size: 1.10rem;
@@ -377,14 +361,17 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="logo-row">
-      <span class="header-logo">
-        <img src="logo.jpg" alt="Logo Kairos Knight" style="width:56px; height:56px; border-radius: 50%;" loading="lazy"/>
-      </span>
-      <h1>Admin Dashboard Kairos Knight</h1>
-      <div class="admin-actions">
-        <button id="logoutBtn" class="btn-logout" type="button" title="Logout">&#x1F511; Logout</button>
+    <div class="logo-row" style="justify-content: space-between; align-items: center; display: flex;">
+      <div style="display: flex; align-items: center;">
+        <span class="header-logo">
+          <img src="logo.jpg" alt="Logo Kairos Knight" style="width:56px; height:56px; border-radius: 50%;" loading="lazy"/>
+        </span>
+        <h1 style="margin-left: 0.65rem;">Admin Dashboard Kairos Knight</h1>
       </div>
+      <!-- Tombol logout berwarna merah -->
+      <button type="button" class="btn-logout-custom" id="logoutBtn" title="Logout" style="margin-left:1.1rem">
+        &#128274; Logout
+      </button>
     </div>
     <div class="sub">
       <span>&#x1F389; Selamat datang di halaman admin dashboard<br>Kelola anggota, cabang, dan galeri <b>Kairos Knight</b> di sini.<br>Jangan lupa <b>simpan perubahan</b> setiap selesai edit!</span>
@@ -447,25 +434,6 @@
           { name: "Community", images: [] }
         ]
       };
-
-      // ==== LOGOUT FEATURE ====
-      if (!localStorage.getItem("kairosKnightLoggedIn")) {
-        window.location.href = "index.html";
-      }
-      document.addEventListener("DOMContentLoaded", function () {
-        var logoutBtn = document.getElementById("logoutBtn");
-        if (logoutBtn) {
-          logoutBtn.addEventListener("click", function () {
-            if (confirm("Yakin ingin logout?")) {
-              localStorage.removeItem("kairosKnightLoggedIn");
-              window.location.href = "index.html";
-            }
-          });
-        }
-      });
-
-      // ========================
-
       function groupLegacyGallery(items) {
         var map = {};
         (items || []).forEach(function (item) {
@@ -716,6 +684,21 @@
           showStatus("Data kembali ke default.");
         }
       });
+
+      // Tombol logout - hapus data login jika ada & redirect ke halaman index.html
+      var logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          // Bersihkan juga session/local storage login jika ada. 
+          // Ini asumsinya ada item "kairosAdminLogin" untuk sesi login.
+          localStorage.removeItem("kairosAdminLogin");
+          sessionStorage.removeItem("kairosAdminLogin");
+          showStatus("Berhasil logout, mengalihkan ke halaman utama...");
+          setTimeout(function() {
+            window.location.href = "index.html";
+          }, 700);
+        });
+      }
 
       // Tooltip popover on info icon (future improvement)
       // (bonus: Favicon animasi kecil!)
