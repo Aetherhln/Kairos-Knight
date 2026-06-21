@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin Kairos Knight</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" /> 
+  <style>
+    :root {
+      --bg: #1e1140;
+      --card: #24143c;
+      --line: #b775ff33;
+      --text: #f6edff;
+      --accent: #b775ff;
+      --danger: #ff5f8a;
+      --ok: #55e1b6;
+    }
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      background: linear-gradient(120deg, #2a1861 0%, #4b2257 100%), var(--bg);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+    .login-card {
+      background: var(--card);
+      padding: 2.15rem 2.4rem 1.9rem 2.4rem;
+      border-radius: 17px;
+      box-shadow: 0 2px 22px 0 #b775ff2f;
+      max-width: 340px;
+      width: 100%;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.1rem;
+    }
+    .login-card h1 {
+      font-family: 'Bebas Neue', 'DM Sans', Arial, sans-serif;
+      text-align: center;
+      margin: 0 0 1.2rem 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.045em;
+      color: var(--accent);
+      text-shadow: 0 1px 14px #a259f731;
+    }
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.7rem;
+    }
+    .login-logo img {
+      height: 60px;
+      width: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 18px 0 #b775ff21;
+      background: #fff;
+    }
+    .field label {
+      display: block;
+      margin-bottom: 0.23rem;
+      font-size: 0.99rem;
+      color: #dccbfa;
+      letter-spacing: 0.01em;
+    }
+    .field input {
+      width: 100%;
+      font-size: 1.08rem;
+      background: #1d1333;
+      border: 1.4px solid var(--line);
+      border-radius: 9px;
+      padding: 0.58rem 0.7rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 1px 11px #b775ff31;
+    }
+    .login-btn {
+      margin-top: 0.4rem;
+      background: linear-gradient(95deg, var(--accent) 45%, var(--ok) 130%);
+      color: var(--text);
+      border: none;
+      padding: 0.67rem;
+      border-radius: 11px;
+      font-size: 1.12rem;
+      font-family: inherit;
+      font-weight: 700;
+      letter-spacing: 0.017em;
+      cursor: pointer;
+      transition: background 0.18s;
+      box-shadow: 0 1.8px 10px #b775ff2a;
+    }
+    .login-btn:hover {
+      background: linear-gradient(100deg, #ac6cf7 55%, #55e1b6 120%);
+      box-shadow: 0 3px 18px #b775ff2d;
+    }
+    .alert {
+      margin-top: -.51rem;
+      margin-bottom: 0.5rem;
+      color: var(--danger);
+      text-align: center;
+      font-size: 1rem;
+      min-height: 1.4em;
+      letter-spacing: 0.008em;
+    }
+  </style>
+</head>
+<body>
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div class="login-logo">
+      <img src="logo.jpg" alt="Logo Kairos Knight" />
+    </div>
+    <h1>Login Admin</h1>
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" autocomplete="username" placeholder="Masukkan nama pengguna" required autofocus />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required />
+    </div>
+    <div class="alert" id="alertBox"></div>
+    <button class="login-btn" type="submit">Masuk</button>
+  </form>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const alertBox = document.getElementById('alertBox');
+      if (user === "admin" && pass === "administrator") {
+        alertBox.textContent = "";
+        // redirect to admin page (ganti path sesuai kebutuhan)
+        window.location.href = "admin.html";
+      } else {
+        alertBox.textContent = "Username atau password salah!";
+      }
+    });
+  </script>
+</body>
+</html>

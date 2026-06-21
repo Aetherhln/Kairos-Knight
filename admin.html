@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Kairos Knight</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+
+  <style>
+    :root {
+      --bg-1: #090510;
+      --bg-2: #160925;
+      --bg-3: #2d0b52;
+      --surface: rgba(24, 14, 42, 0.82);
+      --surface-strong: #1b102d;
+      --surface-soft: rgba(255, 255, 255, 0.045);
+      --surface-hover: rgba(168, 85, 247, 0.11);
+      --line: rgba(216, 180, 254, 0.15);
+      --line-strong: rgba(192, 132, 252, 0.34);
+      --text: #faf7ff;
+      --muted: #cdbce0;
+      --accent: #a855f7;
+      --accent-2: #c084fc;
+      --accent-3: #7c3aed;
+      --danger: #fb5f83;
+      --success: #5ee0b4;
+      --warning: #f6c66a;
+      --sidebar-w: 245px;
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.32);
+      --shadow-glow: 0 16px 45px rgba(168, 85, 247, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(217, 70, 239, 0.20), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(124, 58, 237, 0.22), transparent 32%),
+        radial-gradient(circle at 55% 95%, rgba(168, 85, 247, 0.16), transparent 38%),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.36;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 80%);
+      z-index: -1;
+    }
+
+    button,
+    input,
+    a {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 1.35rem 1rem;
+      background: rgba(11, 7, 20, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-right: 1px solid var(--line);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      padding: .65rem .6rem 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-logo {
+      width: 47px;
+      height: 47px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+      background: linear-gradient(145deg, #fff, #e9ddff);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, .24);
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: .055em;
+      line-height: 1;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: .2rem;
+      color: var(--muted);
+      font-size: .72rem;
+    }
+
+    .nav-label {
+      color: #8f7fa5;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: .35rem .75rem;
+    }
+
+    .sidebar-nav {
+      display: grid;
+      gap: .42rem;
+    }
+
+    .side-link {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      min-height: 46px;
+      padding: .72rem .8rem;
+      border-radius: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: .2s ease;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      color: #fff;
+      background: linear-gradient(100deg, rgba(168,85,247,.18), rgba(192,132,252,.07));
+      border-color: rgba(192,132,252,.18);
+      transform: translateX(2px);
+    }
+
+    .side-icon {
+      width: 31px;
+      height: 31px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(168,85,247,.12);
+      color: var(--accent-2);
+      font-size: 1rem;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .mini-profile {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .75rem;
+      border-radius: 14px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #190b2b;
+      background: linear-gradient(135deg, var(--accent-2), #f0d8ff);
+      box-shadow: 0 8px 24px rgba(168,85,247,.22);
+    }
+
+    .mini-profile strong {
+      display: block;
+      font-size: .84rem;
+    }
+
+    .mini-profile span {
+      display: block;
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: .12rem;
+    }
+
+    /* Main */
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      background: rgba(10, 6, 18, .62);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      min-width: 0;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-soft);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .page-title h1 {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      letter-spacing: .045em;
+      line-height: 1;
+    }
+
+    .page-title p {
+      margin: .32rem 0 0;
+      color: var(--muted);
+      font-size: .84rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+    }
+
+    .content {
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      padding: 1.7rem 2rem 3rem;
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(230px, .65fr);
+      gap: 1rem;
+      align-items: center;
+      padding: 1.5rem 1.65rem;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(115deg, rgba(168,85,247,.20), rgba(124,58,237,.07)),
+        rgba(20, 11, 35, .80);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -90px;
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,132,252,.24), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+      font-size: .72rem;
+    }
+
+    .hero-panel h2 {
+      margin: .55rem 0 .35rem;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.14;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: .65rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 130px;
+      padding: 1.15rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(23, 13, 39, .79);
+      box-shadow: 0 16px 38px rgba(0,0,0,.18);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .8rem;
+    }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(168,85,247,.23), rgba(124,58,237,.08));
+      color: var(--accent-2);
+      border: 1px solid rgba(192,132,252,.16);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .stat-value {
+      display: block;
+      margin-top: .65rem;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .stat-note {
+      display: block;
+      margin-top: .08rem;
+      color: #9785ad;
+      font-size: .72rem;
+    }
+
+    /* Content cards */
+    .section-card {
+      scroll-margin-top: 100px;
+      margin-bottom: 1.15rem;
+      padding: 1.3rem;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: rgba(18, 10, 31, .80);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+
+    .section-title-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: var(--accent-2);
+      background: rgba(168,85,247,.12);
+      border: 1px solid rgba(192,132,252,.18);
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .section-head p {
+      margin: .22rem 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .list {
+      display: grid;
+      gap: .8rem;
+    }
+
+    .item {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, rgba(255,255,255,.04), rgba(168,85,247,.025));
+      transition: .2s ease;
+    }
+
+    .item:hover,
+    .item:focus-within {
+      border-color: var(--line-strong);
+      background: linear-gradient(120deg, rgba(255,255,255,.055), rgba(168,85,247,.065));
+      box-shadow: 0 14px 35px rgba(168,85,247,.08);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: .8rem;
+      align-items: end;
+    }
+
+    .field {
+      grid-column: span 12;
+      min-width: 0;
+    }
+
+    @media (min-width: 760px) {
+      .field.col-2 { grid-column: span 2; }
+      .field.col-3 { grid-column: span 3; }
+      .field.col-4 { grid-column: span 4; }
+      .field.col-6 { grid-column: span 6; }
+      .field.col-10 { grid-column: span 10; }
+      .field.col-12 { grid-column: span 12; }
+    }
+
+    label {
+      display: block;
+      margin-bottom: .38rem;
+      color: var(--muted);
+      font-size: .77rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="email"] {
+      width: 100%;
+      height: 45px;
+      padding: 0 .85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(216,180,254,.15);
+      background: rgba(9,5,16,.62);
+      color: var(--text);
+      outline: none;
+      font-size: .92rem;
+      font-weight: 600;
+      transition: .18s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(168,85,247,.12);
+      background: rgba(14,8,25,.85);
+    }
+
+    input[type="file"] {
+      width: 100%;
+      color: var(--muted);
+      padding: .55rem;
+      border: 1px dashed rgba(192,132,252,.25);
+      border-radius: 12px;
+      background: rgba(168,85,247,.04);
+    }
+
+    input[type="file"]::file-selector-button {
+      border: 0;
+      margin-right: .7rem;
+      padding: .55rem .8rem;
+      border-radius: 9px;
+      color: #1a0d2b;
+      background: linear-gradient(135deg, var(--accent-2), #e5c5ff);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .gallery-preview {
+      width: 100%;
+      max-width: 150px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      border: 1px solid var(--line-strong);
+      background: #11081d;
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+    }
+
+    .muted {
+      color: #a994bf;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    .btn,
+    button,
+    .link-btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .48rem;
+      padding: .66rem 1rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: .84rem;
+      font-weight: 800;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+
+    .btn:hover,
+    button:hover,
+    .link-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled,
+    .btn:disabled {
+      cursor: wait;
+      opacity: 0.58;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      color: #1b0b2d;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 25px rgba(168,85,247,.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 14px 32px rgba(168,85,247,.38);
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      background: rgba(255,255,255,.035);
+      border-color: var(--line);
+    }
+
+    .btn-ghost:hover {
+      color: var(--accent-2);
+      border-color: var(--line-strong);
+      background: var(--surface-hover);
+    }
+
+    .btn-danger {
+      color: #fff;
+      background: linear-gradient(135deg, #ff6489, #c93267);
+      box-shadow: 0 8px 20px rgba(251,95,131,.16);
+    }
+
+    .btn-ok {
+      color: #06221a;
+      background: linear-gradient(135deg, #63e7bd, #35cfa4);
+      box-shadow: 0 8px 20px rgba(94,224,180,.16);
+    }
+
+    .btn-logout-custom {
+      color: #fff;
+      background: rgba(251,95,131,.10);
+      border-color: rgba(251,95,131,.24);
+    }
+
+    .btn-logout-custom:hover {
+      background: linear-gradient(135deg, #ff6489, #c93267);
+      border-color: transparent;
+    }
+
+    .icon-button {
+      width: 42px;
+      min-width: 42px;
+      padding: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .65rem;
+      margin-top: 1rem;
+    }
+
+    .action-bar {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .9rem;
+      margin-top: 1rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      background: rgba(14, 8, 24, .84);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.32);
+    }
+
+    .status {
+      margin: 0;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 700;
+      min-height: 1.2em;
+    }
+
+    .status.success { color: var(--success); }
+    .status.error { color: var(--danger); }
+
+    .toast {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.2rem;
+      z-index: 80;
+      max-width: min(360px, calc(100vw - 2rem));
+      padding: .85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: rgba(18, 10, 31, .96);
+      color: var(--text);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(25px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      font-size: .84rem;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sidebar-overlay {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: min(280px, 86vw);
+        transform: translateX(-102%);
+        transition: transform .25s ease;
+        box-shadow: 30px 0 70px rgba(0,0,0,.45);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 19;
+        display: block;
+        background: rgba(0,0,0,.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s ease;
+      }
+
+      .sidebar-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .topbar {
+        padding: .85rem 1rem;
+      }
+
+      .content {
+        padding: 1.15rem 1rem 2rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-title p {
+        display: none;
+      }
+
+      .top-actions .btn-ghost {
+        display: none;
+      }
+
+      .hero-panel {
+        padding: 1.2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-card {
+        padding: 1rem;
+        border-radius: 20px;
+      }
+
+      .section-head {
+        align-items: flex-start;
+      }
+
+      .section-head > .btn-ghost {
+        padding-inline: .75rem;
+      }
+
+      .action-bar {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action-bar .actions {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .action-bar .btn,
+      .action-bar button,
+      .action-bar .link-btn {
+        width: 100%;
+      }
+
+      .gallery-preview {
+        max-width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-logo">
+          <img src="logo.jpg" alt="Logo Kairos Knight" />
+        </span>
+        <div class="brand-copy">
+          <strong>Kairos Knight</strong>
+          <span>Admin Management</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="nav-label">Menu utama</div>
+        <nav class="sidebar-nav">
+          <a href="#overview" class="side-link active">
+            <span class="side-icon">⌂</span>
+            <span>Ringkasan</span>
+          </a>
+          <a href="#members" class="side-link">
+            <span class="side-icon">♟</span>
+            <span>Anggota</span>
+          </a>
+          <a href="#branches" class="side-link">
+            <span class="side-icon">⌖</span>
+            <span>Cabang</span>
+          </a>
+          <a href="#gallery" class="side-link">
+            <span class="side-icon">▧</span>
+            <span>Galeri</span>
+          </a>
+        </nav>
+      </div>
+
+      <div>
+        <div class="nav-label">Akses cepat</div>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="side-link">
+            <span class="side-icon">↗</span>
+            <span>Dashboard publik</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="mini-profile">
+          <span class="avatar">A</span>
+          <div>
+            <strong>Administrator</strong>
+            <span>Kairos Knight</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="page-title">
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
+          <div>
+            <h1>Admin Dashboard</h1>
+            <p>Kelola data klub Kairos Knight dari satu tempat.</p>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <a href="dashboard.html" class="btn btn-ghost">↗ Lihat website</a>
+          <button type="button" class="btn btn-logout-custom" id="logoutBtn">⏻ Logout</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="hero-panel" id="overview">
+          <div>
+            <span class="eyebrow">✦ Control Center</span>
+            <h2>Selamat datang di pusat pengelolaan Kairos Knight.</h2>
+            <p>Kelola anggota, cabang, dan dokumentasi kegiatan dengan tampilan yang lebih terstruktur dan mudah dipahami.</p>
+          </div>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" id="heroSaveBtn">💾 Simpan sekarang</button>
+            <a href="#gallery" class="btn btn-ghost">Kelola galeri</a>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Ringkasan data">
+          <article class="stat-card">
+            <div class="stat-top">
+              <span class="stat-label">Total anggota</span>
+              <span class="stat-icon">♟</span>
+            </div>
+            <strong class="stat-value" id="memberCount">0</strong>
+            <span class="stat-note">Data tim terdaftar</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span class="stat-label">Total cabang</span>
+              <span class="stat-icon">⌖</span>
+            </div>
+            <strong class="stat-value" id="branchCount">0</strong>
+            <span class="stat-note">Lokasi aktif</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span class="stat-label">Kelompok galeri</span>
+              <span class="stat-icon">▧</span>
+            </div>
+            <strong class="stat-value" id="galleryGroupCount">0</strong>
+            <span class="stat-note">Kategori dokumentasi</span>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span class="stat-label">Total gambar</span>
+              <span class="stat-icon">◫</span>
+            </div>
+            <strong class="stat-value" id="imageCount">0</strong>
+            <span class="stat-note">Foto tersimpan</span>
+          </article>
+        </section>
+
+        <section class="section-card" id="members">
+          <div class="section-head">
+            <div class="section-title">
+              <span class="section-title-icon">♟</span>
+              <div>
+                <h3>Daftar Anggota</h3>
+                <p>Atur nama atau jabatan anggota tim.</p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-ghost" id="addMemberBtn">＋ Tambah</button>
+          </div>
+          <div id="membersList" class="list"></div>
+        </section>
+
+        <section class="section-card" id="branches">
+          <div class="section-head">
+            <div class="section-title">
+              <span class="section-title-icon">⌖</span>
+              <div>
+                <h3>Cabang Tim</h3>
+                <p>Kelola nama cabang dan lokasi latihan.</p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-ghost" id="addBranchBtn">＋ Tambah</button>
+          </div>
+          <div id="branchesList" class="list"></div>
+        </section>
+
+        <section class="section-card" id="gallery">
+          <div class="section-head">
+            <div class="section-title">
+              <span class="section-title-icon">▧</span>
+              <div>
+                <h3>Galeri Kegiatan</h3>
+                <p>Upload dan kelompokkan dokumentasi kegiatan klub. Gambar otomatis dikompres agar muat di penyimpanan browser.</p>
+              </div>
+            </div>
+            <button type="button" class="btn btn-ghost" id="addGalleryBtn">＋ Tambah</button>
+          </div>
+          <div id="galleryList" class="list"></div>
+        </section>
+
+        <div class="action-bar">
+          <p id="statusText" class="status">Belum ada perubahan yang disimpan.</p>
+          <div class="actions">
+            <button type="button" class="btn btn-ok" id="saveBtn">💾 Simpan perubahan</button>
+            <button type="button" class="btn btn-danger" id="resetBtn">↺ Reset data</button>
+            <a href="dashboard.html" class="link-btn btn-primary">↗ Dashboard publik</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "kairosDashboardData";
+      var toastTimer;
+
+      // localStorage biasanya dibatasi sekitar 5 MB per origin.
+      // Batas dibuat lebih rendah agar penyimpanan tetap stabil.
+      var MAX_STATE_BYTES = 4.2 * 1024 * 1024;
+      var MAX_IMAGE_BYTES = 240 * 1024;
+      var MAX_IMAGE_DIMENSION = 1280;
+
+      var defaults = {
+        members: [
+          { role: "Pelatih Kepala" },
+          { role: "Kapten" },
+          { role: "Manajer" },
+          { role: "Anggota" }
+        ],
+        branches: [
+          { name: "Kairos Knight Jakarta", location: "Jakarta Selatan, GOR Bulungan" },
+          { name: "Kairos Knight Depok", location: "Depok, GOR Cipayung" },
+          { name: "Kairos Knight Bandung", location: "Bandung, Cihampelas" },
+          { name: "Cabang Lain (Custom)", location: "Tulis cabangmu sendiri di sini!" }
+        ],
+        gallery: [
+          { name: "Latihan tim", images: [] },
+          { name: "Turnamen", images: [] },
+          { name: "After game", images: [] },
+          { name: "Community", images: [] }
+        ]
+      };
+
+      function cloneDefaults() {
+        return JSON.parse(JSON.stringify(defaults));
+      }
+
+      function getTextBytes(text) {
+        return new Blob([text || ""]).size;
+      }
+
+      function getDataUrlBytes(dataUrl) {
+        if (!dataUrl || dataUrl.indexOf(",") === -1) return 0;
+        var base64 = dataUrl.split(",")[1] || "";
+        return Math.ceil(base64.length * 3 / 4);
+      }
+
+      function getStateBytes(data) {
+        return getTextBytes(JSON.stringify(data));
+      }
+
+      function formatBytes(bytes) {
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + " KB";
+        return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+      }
+
+      function readFileAsDataUrl(file) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+
+          reader.onload = function () {
+            resolve(reader.result);
+          };
+
+          reader.onerror = function () {
+            reject(new Error("File gambar gagal dibaca."));
+          };
+
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function compressImageSource(source, targetBytes) {
+        return new Promise(function (resolve, reject) {
+          var image = new Image();
+
+          image.onload = function () {
+            try {
+              var maxDimension = MAX_IMAGE_DIMENSION;
+              var quality = 0.82;
+              var result = source;
+
+              for (var attempt = 0; attempt < 12; attempt++) {
+                var scale = Math.min(
+                  1,
+                  maxDimension / image.naturalWidth,
+                  maxDimension / image.naturalHeight
+                );
+
+                var width = Math.max(1, Math.round(image.naturalWidth * scale));
+                var height = Math.max(1, Math.round(image.naturalHeight * scale));
+
+                var canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+
+                var context = canvas.getContext("2d", { alpha: false });
+                if (!context) {
+                  reject(new Error("Browser tidak mendukung kompresi gambar."));
+                  return;
+                }
+
+                // Latar putih mencegah hasil hitam pada gambar PNG transparan.
+                context.fillStyle = "#ffffff";
+                context.fillRect(0, 0, width, height);
+                context.drawImage(image, 0, 0, width, height);
+
+                result = canvas.toDataURL("image/jpeg", quality);
+
+                if (getDataUrlBytes(result) <= targetBytes) {
+                  resolve(result);
+                  return;
+                }
+
+                if (quality > 0.52) {
+                  quality -= 0.08;
+                } else {
+                  maxDimension = Math.max(640, Math.round(maxDimension * 0.82));
+                  quality = 0.72;
+                }
+              }
+
+              resolve(result);
+            } catch (error) {
+              reject(error);
+            }
+          };
+
+          image.onerror = function () {
+            reject(new Error("Format gambar tidak dapat diproses."));
+          };
+
+          image.src = source;
+        });
+      }
+
+      async function compressImageFile(file) {
+        var source = await readFileAsDataUrl(file);
+        return compressImageSource(source, MAX_IMAGE_BYTES);
+      }
+
+      async function optimizeGalleryImages(data) {
+        for (var groupIndex = 0; groupIndex < data.gallery.length; groupIndex++) {
+          var group = data.gallery[groupIndex];
+
+          if (!Array.isArray(group.images)) {
+            group.images = [];
+            continue;
+          }
+
+          for (var imageIndex = 0; imageIndex < group.images.length; imageIndex++) {
+            var imageSource = group.images[imageIndex];
+
+            if (
+              typeof imageSource === "string" &&
+              imageSource.indexOf("data:image/") === 0 &&
+              getDataUrlBytes(imageSource) > MAX_IMAGE_BYTES
+            ) {
+              group.images[imageIndex] = await compressImageSource(
+                imageSource,
+                MAX_IMAGE_BYTES
+              );
+            }
+          }
+        }
+      }
+
+      function groupLegacyGallery(items) {
+        var map = {};
+
+        (items || []).forEach(function (item) {
+          if (!item) return;
+
+          var title = (item.name || item.title || "Umum").trim();
+          if (!map[title]) map[title] = [];
+
+          if (Array.isArray(item.images)) {
+            item.images.forEach(function (img) {
+              if (img && String(img).trim() !== "") {
+                map[title].push(String(img));
+              }
+            });
+          } else if (item.image && String(item.image).trim() !== "") {
+            map[title].push(String(item.image));
+          }
+        });
+
+        return Object.keys(map).map(function (key) {
+          return { name: key, images: map[key] };
+        });
+      }
+
+      function loadData() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return cloneDefaults();
+
+          var parsed = JSON.parse(raw);
+          var gallery = Array.isArray(parsed.gallery)
+            ? parsed.gallery
+            : defaults.gallery.slice();
+
+          return {
+            members: (Array.isArray(parsed.members) ? parsed.members : defaults.members)
+              .map(function (member) {
+                return {
+                  role: member && member.role != null ? member.role : ""
+                };
+              }),
+            branches: Array.isArray(parsed.branches)
+              ? parsed.branches
+              : defaults.branches.slice(),
+            gallery: groupLegacyGallery(gallery)
+          };
+        } catch (error) {
+          return cloneDefaults();
+        }
+      }
+
+      function createInput(label, value, className) {
+        var field = document.createElement("div");
+        field.className = "field " + (className || "");
+
+        var labelEl = document.createElement("label");
+        labelEl.textContent = label;
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.value = value || "";
+
+        field.appendChild(labelEl);
+        field.appendChild(input);
+
+        return { field: field, input: input };
+      }
+
+      function createDeleteButton(title, handler) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "btn-danger icon-button";
+        button.title = title;
+        button.setAttribute("aria-label", title);
+        button.textContent = "🗑";
+        button.addEventListener("click", handler);
+        return button;
+      }
+
+      function updateStats(data) {
+        var totalImages = data.gallery.reduce(function (total, group) {
+          return total + (Array.isArray(group.images) ? group.images.length : 0);
+        }, 0);
+
+        document.getElementById("memberCount").textContent = data.members.length;
+        document.getElementById("branchCount").textContent = data.branches.length;
+        document.getElementById("galleryGroupCount").textContent = data.gallery.length;
+        document.getElementById("imageCount").textContent = totalImages;
+      }
+
+      function renderMembers(data) {
+        var root = document.getElementById("membersList");
+        root.innerHTML = "";
+
+        data.members.forEach(function (member, index) {
+          var item = document.createElement("div");
+          item.className = "item";
+
+          var row = document.createElement("div");
+          row.className = "row";
+
+          var roleField = createInput("Jabatan / nama", member.role, "col-10");
+
+          var deleteWrap = document.createElement("div");
+          deleteWrap.className = "field col-2";
+          deleteWrap.appendChild(
+            createDeleteButton("Hapus anggota", function () {
+              if (confirm("Yakin ingin menghapus anggota ini?")) {
+                data.members.splice(index, 1);
+                renderAll(data);
+                markUnsaved("Anggota dihapus. Simpan untuk menerapkan perubahan.");
+              }
+            })
+          );
+
+          row.appendChild(roleField.field);
+          row.appendChild(deleteWrap);
+          item.appendChild(row);
+          root.appendChild(item);
+
+          roleField.input.addEventListener("input", function () {
+            member.role = roleField.input.value;
+            markUnsaved();
+          });
+        });
+      }
+
+      function renderBranches(data) {
+        var root = document.getElementById("branchesList");
+        root.innerHTML = "";
+
+        data.branches.forEach(function (branch, index) {
+          var item = document.createElement("div");
+          item.className = "item";
+
+          var row = document.createElement("div");
+          row.className = "row";
+
+          var nameField = createInput("Nama cabang", branch.name, "col-6");
+          var locationField = createInput("Lokasi", branch.location, "col-4");
+
+          var deleteWrap = document.createElement("div");
+          deleteWrap.className = "field col-2";
+          deleteWrap.appendChild(
+            createDeleteButton("Hapus cabang", function () {
+              if (confirm("Yakin ingin menghapus cabang ini?")) {
+                data.branches.splice(index, 1);
+                renderAll(data);
+                markUnsaved("Cabang dihapus. Simpan untuk menerapkan perubahan.");
+              }
+            })
+          );
+
+          row.appendChild(nameField.field);
+          row.appendChild(locationField.field);
+          row.appendChild(deleteWrap);
+          item.appendChild(row);
+          root.appendChild(item);
+
+          nameField.input.addEventListener("input", function () {
+            branch.name = nameField.input.value;
+            markUnsaved();
+          });
+
+          locationField.input.addEventListener("input", function () {
+            branch.location = locationField.input.value;
+            markUnsaved();
+          });
+        });
+      }
+
+      function renderGallery(data) {
+        var root = document.getElementById("galleryList");
+        root.innerHTML = "";
+
+        data.gallery.forEach(function (group, index) {
+          var item = document.createElement("div");
+          item.className = "item";
+
+          var row = document.createElement("div");
+          row.className = "row";
+
+          var nameField = createInput("Nama kelompok", group.name, "col-3");
+
+          var uploadWrap = document.createElement("div");
+          uploadWrap.className = "field col-4";
+
+          var uploadLabel = document.createElement("label");
+          uploadLabel.textContent = "Upload gambar";
+
+          var uploadInput = document.createElement("input");
+          uploadInput.type = "file";
+          uploadInput.accept = "image/*";
+
+          uploadWrap.appendChild(uploadLabel);
+          uploadWrap.appendChild(uploadInput);
+
+          var previewWrap = document.createElement("div");
+          previewWrap.className = "field col-3";
+
+          var previewLabel = document.createElement("label");
+          previewLabel.textContent = "Preview terakhir";
+
+          var preview = document.createElement("img");
+          preview.className = "gallery-preview";
+          preview.alt = group.name || "Preview galeri";
+
+          var latestImage = Array.isArray(group.images) && group.images.length
+            ? group.images[group.images.length - 1]
+            : "";
+
+          preview.src = latestImage
+            ? latestImage
+            : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='100%25' height='100%25' fill='%2311081d'/%3E%3Ctext x='50%25' y='50%25' fill='%23cdbce0' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle'%3EBelum ada gambar%3C/text%3E%3C/svg%3E";
+
+          previewWrap.appendChild(previewLabel);
+          previewWrap.appendChild(preview);
+
+          var deleteWrap = document.createElement("div");
+          deleteWrap.className = "field col-2";
+          deleteWrap.appendChild(
+            createDeleteButton("Hapus kelompok galeri", function () {
+              if (confirm("Yakin ingin menghapus kelompok galeri ini?")) {
+                data.gallery.splice(index, 1);
+                renderAll(data);
+                markUnsaved("Kelompok galeri dihapus. Simpan untuk menerapkan perubahan.");
+              }
+            })
+          );
+
+          var countWrap = document.createElement("div");
+          countWrap.className = "field col-12 muted";
+          countWrap.textContent =
+            "Total gambar: " +
+            (Array.isArray(group.images) ? group.images.length : 0);
+
+          var imageTools = document.createElement("div");
+          imageTools.className = "field col-12 actions";
+          imageTools.style.marginTop = "0";
+
+          if (Array.isArray(group.images) && group.images.length) {
+            var removeLastImageBtn = document.createElement("button");
+            removeLastImageBtn.type = "button";
+            removeLastImageBtn.className = "btn btn-ghost";
+            removeLastImageBtn.textContent = "− Hapus foto terakhir";
+            removeLastImageBtn.addEventListener("click", function () {
+              if (!group.images.length) return;
+
+              group.images.pop();
+              renderAll(data);
+              markUnsaved("Foto terakhir dihapus. Simpan untuk menerapkan perubahan.");
+            });
+
+            var clearImagesBtn = document.createElement("button");
+            clearImagesBtn.type = "button";
+            clearImagesBtn.className = "btn btn-danger";
+            clearImagesBtn.textContent = "Hapus semua foto";
+            clearImagesBtn.addEventListener("click", function () {
+              if (confirm("Yakin ingin menghapus semua foto pada kelompok ini?")) {
+                group.images = [];
+                renderAll(data);
+                markUnsaved("Semua foto kelompok dihapus. Simpan untuk menerapkan perubahan.");
+              }
+            });
+
+            imageTools.appendChild(removeLastImageBtn);
+            imageTools.appendChild(clearImagesBtn);
+          }
+
+          row.appendChild(nameField.field);
+          row.appendChild(uploadWrap);
+          row.appendChild(previewWrap);
+          row.appendChild(deleteWrap);
+          row.appendChild(countWrap);
+          row.appendChild(imageTools);
+
+          item.appendChild(row);
+          root.appendChild(item);
+
+          nameField.input.addEventListener("input", function () {
+            group.name = nameField.input.value;
+            preview.alt = group.name || "Preview galeri";
+            markUnsaved();
+          });
+
+          uploadInput.addEventListener("change", async function () {
+            var file = uploadInput.files && uploadInput.files[0];
+            if (!file) return;
+
+            if (!file.type || file.type.indexOf("image/") !== 0) {
+              showStatus("File harus berupa gambar.", "error");
+              showToast("File yang dipilih bukan gambar.");
+              uploadInput.value = "";
+              return;
+            }
+
+            if (file.size > 15 * 1024 * 1024) {
+              showStatus("Ukuran file terlalu besar. Maksimal 15 MB sebelum dikompres.", "error");
+              showToast("Gambar terlalu besar.");
+              uploadInput.value = "";
+              return;
+            }
+
+            uploadInput.disabled = true;
+            showStatus("Gambar sedang dikompres...", "");
+
+            try {
+              var compressedImage = await compressImageFile(file);
+
+              if (!Array.isArray(group.images)) {
+                group.images = [];
+              }
+
+              // Uji ukuran sebelum gambar benar-benar dimasukkan ke state.
+              group.images.push(compressedImage);
+
+              var projectedBytes = getStateBytes(data);
+              if (projectedBytes > MAX_STATE_BYTES) {
+                group.images.pop();
+
+                showStatus(
+                  "Gambar tidak ditambahkan karena kapasitas localStorage hampir penuh. Hapus beberapa foto lama terlebih dahulu.",
+                  "error"
+                );
+                showToast("Penyimpanan galeri hampir penuh.");
+                return;
+              }
+
+              preview.src = compressedImage;
+              preview.style.cursor = "pointer";
+              preview.title = "Klik untuk melihat ukuran besar";
+              countWrap.textContent = "Total gambar: " + group.images.length;
+
+              updateStats(data);
+              markUnsaved(
+                "Gambar berhasil dikompres menjadi " +
+                formatBytes(getDataUrlBytes(compressedImage)) +
+                ". Klik Simpan perubahan."
+              );
+              showToast("Gambar berhasil dikompres dan ditambahkan.");
+            } catch (error) {
+              console.error(error);
+              showStatus(
+                error && error.message
+                  ? error.message
+                  : "Gambar gagal diproses.",
+                "error"
+              );
+              showToast("Gambar gagal diproses.");
+            } finally {
+              uploadInput.disabled = false;
+              uploadInput.value = "";
+            }
+          });
+
+          preview.addEventListener("click", function () {
+            if (!group.images || !group.images.length) return;
+
+            var currentImage = group.images[group.images.length - 1];
+            var imageWindow = window.open();
+
+            if (!imageWindow) {
+              showToast("Popup diblokir oleh browser.");
+              return;
+            }
+
+            imageWindow.document.write(
+              "<html><head><title>Preview gambar</title></head>" +
+              "<body style='margin:0;background:#090510;display:flex;align-items:center;justify-content:center;min-height:100vh'>" +
+              "<img src='" + currentImage.replace(/'/g, "\\'") + "' alt='Preview' " +
+              "style='max-width:96vw;max-height:92vh;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.45)' />" +
+              "</body></html>"
+            );
+          });
+
+          if (latestImage) {
+            preview.style.cursor = "pointer";
+            preview.title = "Klik untuk melihat ukuran besar";
+          }
+        });
+      }
+
+      function renderAll(data) {
+        renderMembers(data);
+        renderBranches(data);
+        renderGallery(data);
+        updateStats(data);
+      }
+
+      function showStatus(text, type) {
+        var status = document.getElementById("statusText");
+        status.textContent = text || "";
+        status.className = "status" + (type ? " " + type : "");
+      }
+
+      function showToast(text) {
+        var toast = document.getElementById("toast");
+        toast.textContent = text;
+        toast.classList.add("show");
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2400);
+      }
+
+      function markUnsaved(message) {
+        showStatus(
+          message || "Ada perubahan yang belum disimpan.",
+          ""
+        );
+      }
+
+      async function saveData() {
+        var saveButtons = [
+          document.getElementById("saveBtn"),
+          document.getElementById("heroSaveBtn")
+        ];
+
+        saveButtons.forEach(function (button) {
+          if (button) button.disabled = true;
+        });
+
+        showStatus("Mengoptimalkan gambar dan menyimpan data...", "");
+
+        try {
+          // Gambar lama yang pernah disimpan tanpa kompresi ikut diperkecil.
+          await optimizeGalleryImages(state);
+
+          var serializedState = JSON.stringify(state);
+          var stateBytes = getTextBytes(serializedState);
+
+          if (stateBytes > MAX_STATE_BYTES) {
+            throw new Error(
+              "Data galeri masih terlalu besar (" +
+              formatBytes(stateBytes) +
+              "). Hapus beberapa foto lama lalu simpan kembali."
+            );
+          }
+
+          localStorage.setItem(STORAGE_KEY, serializedState);
+          renderAll(state);
+
+          showStatus(
+            "Semua perubahan berhasil disimpan. Pemakaian: " +
+            formatBytes(stateBytes) +
+            " dari batas aman " +
+            formatBytes(MAX_STATE_BYTES) +
+            ".",
+            "success"
+          );
+          showToast("Perubahan berhasil disimpan ke localStorage.");
+        } catch (error) {
+          console.error(error);
+
+          var message =
+            error && error.name === "QuotaExceededError"
+              ? "Kapasitas localStorage penuh. Hapus beberapa foto lama lalu simpan kembali."
+              : error && error.message
+                ? error.message
+                : "Data gagal disimpan.";
+
+          showStatus(message, "error");
+          showToast("Gagal menyimpan galeri.");
+        } finally {
+          saveButtons.forEach(function (button) {
+            if (button) button.disabled = false;
+          });
+        }
+      }
+
+      var state = loadData();
+      renderAll(state);
+
+      document.getElementById("addMemberBtn").addEventListener("click", function () {
+        state.members.push({ role: "Nama / Jabatan" });
+        renderAll(state);
+        markUnsaved("Anggota baru ditambahkan.");
+      });
+
+      document.getElementById("addBranchBtn").addEventListener("click", function () {
+        state.branches.push({
+          name: "Nama Cabang",
+          location: "Lokasi"
+        });
+        renderAll(state);
+        markUnsaved("Cabang baru ditambahkan.");
+      });
+
+      document.getElementById("addGalleryBtn").addEventListener("click", function () {
+        state.gallery.push({
+          name: "Kelompok baru",
+          images: []
+        });
+        renderAll(state);
+        markUnsaved("Kelompok galeri baru ditambahkan.");
+      });
+
+      document.getElementById("saveBtn").addEventListener("click", saveData);
+      document.getElementById("heroSaveBtn").addEventListener("click", saveData);
+
+      document.getElementById("resetBtn").addEventListener("click", function () {
+        if (confirm("Yakin ingin mengembalikan semua data ke kondisi awal?")) {
+          state = cloneDefaults();
+          localStorage.removeItem(STORAGE_KEY);
+          renderAll(state);
+          showStatus("Data berhasil dikembalikan ke default.", "success");
+          showToast("Data sudah direset.");
+        }
+      });
+
+      var logoutBtn = document.getElementById("logoutBtn");
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+          localStorage.removeItem("kairosAdminLogin");
+          sessionStorage.removeItem("kairosAdminLogin");
+          showToast("Berhasil logout.");
+
+          setTimeout(function () {
+            window.location.href = "index.html";
+          }, 650);
+        });
+      }
+
+      var sidebar = document.getElementById("sidebar");
+      var menuToggle = document.getElementById("menuToggle");
+      var sidebarOverlay = document.getElementById("sidebarOverlay");
+
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("show");
+      }
+
+      menuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("show");
+      });
+
+      sidebarOverlay.addEventListener("click", closeSidebar);
+
+      document.querySelectorAll(".side-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+          document.querySelectorAll(".side-link").forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          link.classList.add("active");
+
+          if (window.innerWidth <= 860) {
+            closeSidebar();
+          }
+        });
+      });
+
+      var sections = ["overview", "members", "branches", "gallery"]
+        .map(function (id) {
+          return document.getElementById(id);
+        });
+
+      window.addEventListener("scroll", function () {
+        var current = "overview";
+
+        sections.forEach(function (section) {
+          if (section && window.scrollY >= section.offsetTop - 140) {
+            current = section.id;
+          }
+        });
+
+        document.querySelectorAll(".side-link[href^='#']").forEach(function (link) {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + current
+          );
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
